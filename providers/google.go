@@ -34,6 +34,7 @@ type claims struct {
 	Subject       string `json:"sub"`
 	Email         string `json:"email"`
 	EmailVerified bool   `json:"email_verified"`
+	Name          string `json:"name"`
 }
 
 // NewGoogleProvider initiates a new GoogleProvider
@@ -153,7 +154,7 @@ func (p *GoogleProvider) Redeem(redirectURL, code string) (s *sessions.SessionSt
 		ExpiresOn:    time.Now().Add(time.Duration(jsonResponse.ExpiresIn) * time.Second).Truncate(time.Second),
 		RefreshToken: jsonResponse.RefreshToken,
 		Email:        c.Email,
-		User:         c.Subject,
+		User:         c.Name,
 	}
 	return
 }
